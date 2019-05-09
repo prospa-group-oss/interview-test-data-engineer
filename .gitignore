@@ -78,8 +78,20 @@ target/
 # celery beat schedule file
 celerybeat-schedule
 
+#
+#python -c "import base64;t=open('file.txt','r').read();e=base64.b64encode(t.encode());print(e.decode())"
+#
+
 # SageMath parsed files
 *.sage.py
+
+
+#There are a lot of info around
+#git clone --recursive https://github.com/lovasoa/TPCH-sqlite.git
+#export SCALE_FACTOR=0.01 | make
+#ls tpch-dbgen/*.tbl
+TPCH-sqlite
+
 
 # Environments
 .env
@@ -103,5 +115,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-#python -c "import base64;t=open('encoded.txt','r').read();e=base64.b64decode(t);print(e)"
 .test*
+.python-version
+example.db
+
