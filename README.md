@@ -18,16 +18,17 @@ However, we are open to other tools and technologies if we are able to easily re
 
 For the database, use a simple and light optimizer for your database, choose the one which can run a browser, but don't be limited to it. 
 
+Please, avoid licensed products, we may not be able to proceed with this restriction on our own, if this is the case you may need to book a meeting to bring your tool and demo to us. 
+
 How to do it?
 -----------------------
-Fork this repo, build your ETL process and commit the code and your answers. 
+Fork this repo, build your ETL process and commit the code with your answers. Open a Pull Request and send us a message highlighting the test is completed.
 
-Open a Pull Request for us to run & analyse your code and check your answers.
-
-It must come with step by step instructions to run the code.
-
-Please, be mindful that your code might be deleted after we analyse the PR. 
-
+#### Rules
+* it must come with step by step instructions to run the code.
+* please, be mindful that your code might be moved or deleted after we analyse the PR. 
+* comment your commits properly
+* be able to explain from the ground up the whole process on face to face interview
 
 The small ETL project
 --------- 
