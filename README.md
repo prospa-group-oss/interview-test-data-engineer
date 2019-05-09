@@ -35,7 +35,7 @@ The small ETL project
 
 1. The data for this exercise can be found on the `data.zip` file. Can you describe the file format?
 
-**Super Bonus** points: generate your own data through the instructions on the encoded file `bonus_etl_data_gen.txt`.
+**Super Bonus**: generate your own data through the instructions on the encoded file `bonus_etl_data_gen.txt`.
 To get the bonus points, please encoded the file with the instructions were used to generate the files.
 
 2. Code you scripts to load the data into a database.
