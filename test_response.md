@@ -58,12 +58,6 @@ The instruction to deploy the code was mentioned at the beginning of this docume
 
 ## Data Reporting
 ### 1.	What are the top 5 nations in terms of revenue? 
-Ans:
-CANADA|105337574.5622
-EGYPT|102254394.9985
-IRAN|100283451.6143
-BRAZIL|94333196.6970001
-ALGERIA|93680675.2906
 
   select DIM_CUSTOMER.NATION_NAME, sum(FACT_ORDER_LINEITEMS.LINE_REVENUE)
     from FACT_ORDER_LINEITEMS
@@ -71,9 +65,16 @@ ALGERIA|93680675.2906
     group by DIM_CUSTOMER.NATION_NAME
     order by 2 desc
     limit 5;
+    
+Ans:
+CANADA|105337574.5622
+EGYPT|102254394.9985
+IRAN|100283451.6143
+BRAZIL|94333196.6970001
+ALGERIA|93680675.2906
+
 
 ### 2.	From the top 5 nations, what is the most common shipping mode?
-Ans: FOB with 2118 orders
 select SHIPMODE, count(*)
         from FACT_ORDER_LINEITEMS 
             join DIM_CUSTOMER on FACT_ORDER_LINEITEMS.CUSTOMER_KEY = DIM_CUSTOMER.CUSTOMER_KEY
@@ -92,14 +93,11 @@ select SHIPMODE, count(*)
     group by SHIPMODE
     order by 2 desc
     ;
+    
+Ans: FOB with 2118 orders
+
 
 ### 3.	What are the top selling months?
-Ans: Top 5 selling months based on revenue below:
-05|186910950.3546
-03|183780987.1041
-01|180816143.6486
-07|178259733.6994
-04|177213598.997999
 
 select strftime('%m',FACT_ORDER_LINEITEMS.ORDERDATE), sum(FACT_ORDER_LINEITEMS.LINE_REVENUE)
         from FACT_ORDER_LINEITEMS
@@ -107,13 +105,16 @@ select strftime('%m',FACT_ORDER_LINEITEMS.ORDERDATE), sum(FACT_ORDER_LINEITEMS.L
     order by 2 desc
     limit 5;
 
+
+Ans: Top 5 selling months based on revenue below:
+05|186910950.3546
+03|183780987.1041
+01|180816143.6486
+07|178259733.6994
+04|177213598.997999
+
 ### 4.	Who are the top customer in terms of revenue and/or quantity?
---Top 5 Customer based on revenue
-Customer#000001489|5203674.0537|3868
-Customer#000000214|4503703.9036|3369
-Customer#000000073|4466381.0513|3384
-Customer#000001246|4465335.6222|3226
-Customer#000001396|4455381.8182|3408
+*  Top 5 Customer based on revenue
 
 select DIM_CUSTOMER.NAME, sum(FACT_ORDER_LINEITEMS.LINE_REVENUE), sum(QUANTITY)
                 from FACT_ORDER_LINEITEMS 
@@ -121,19 +122,30 @@ select DIM_CUSTOMER.NAME, sum(FACT_ORDER_LINEITEMS.LINE_REVENUE), sum(QUANTITY)
             group by DIM_CUSTOMER.NAME
             order by 2 desc
             limit 5;
-
--- Top 5 customers based on Quantity
+            
 Customer#000001489|5203674.0537|3868
-Customer#000001396|4455381.8182|3408
-Customer#000000073|4466381.0513|3384
 Customer#000000214|4503703.9036|3369
-Customer#000000898|4305984.9017|3309
-  select DIM_CUSTOMER.NAME, sum(FACT_ORDER_LINEITEMS.LINE_REVENUE), sum(QUANTITY)
+Customer#000000073|4466381.0513|3384
+Customer#000001246|4465335.6222|3226
+Customer#000001396|4455381.8182|3408
+
+
+
+* Top 5 customers based on Quantity
+
+ select DIM_CUSTOMER.NAME, sum(FACT_ORDER_LINEITEMS.LINE_REVENUE), sum(QUANTITY)
                 from FACT_ORDER_LINEITEMS 
             inner join DIM_CUSTOMER on FACT_ORDER_LINEITEMS.CUSTOMER_KEY = DIM_CUSTOMER.CUSTOMER_KEY
             group by DIM_CUSTOMER.NAME
             order by 3 desc
             limit 5;
+            
+Customer#000001489|5203674.0537|3868
+Customer#000001396|4455381.8182|3408
+Customer#000000073|4466381.0513|3384
+Customer#000000214|4503703.9036|3369
+Customer#000000898|4305984.9017|3309
+ 
 
 
 ### 5.	Compare the sales revenue of on current period against previous period?
