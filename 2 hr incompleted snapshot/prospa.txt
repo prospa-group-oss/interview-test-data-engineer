@@ -1,0 +1,8 @@
+https://www.programcreek.com/python/example/6844/sqlite3.Error
+
+https://stackoverflow.com/questions/29144619/storing-a-text-file-into-sqlite3-database-using-python/29146872#29146872
+
+
+https://docs.python.org/3/library/sqlite3.html#cursor-objects
+
+https://gist.github.com/YurZ/4164707
