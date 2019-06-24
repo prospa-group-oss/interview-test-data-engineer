@@ -3,7 +3,7 @@
 2. Just run etl_main.py to load the file
 3. select_result.py can be used to test records have been written
 
-## file to review for interviewer:
+## File to review for interviewer:
 data_validation.py
 
 etl_main.py
@@ -12,17 +12,17 @@ select_result.py
 
 Answers:
 
-1. File format is CSV( pipe delimited)
+1 File format is CSV( pipe delimited)
 
-2. See .py files
+2 See .py files
 
-3  Would use a tool to deal with slow change dimension etc for star schema, may try [pygrametl](http://chrthomsen.github.io/pygrametl)
+3 Would use a tool to deal with slow change dimension etc for star schema, may try [pygrametl](http://chrthomsen.github.io/pygrametl)
 
-4.1 done in : bonus answer.sql
+4 Done in : bonus answer.sql
 
-5: will use Apache airflow or Glue ETL scheduler, if not available then a Windows scheduled task or Linux cron
+5 Will use Apache airflow or Glue ETL scheduler, if not available then a Windows scheduled task or Linux cron
 
-6. Test before deploy to scheduling tool
+6 Test before deploy to scheduling tool
 Yes can setup a docker
 
 ## Data Reporting.
