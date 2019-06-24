@@ -5,9 +5,31 @@
 
 ## file to review for interviewer:
 data_validation.py
+
 etl_main.py
+
 select_result.py
-bonus answer.sql
+
+Answers:
+
+1. File format is CSV( pipe delimited)
+2. See .py files
+3  Would use a tool to deal with slow change dimension etc for star schema, may try http://chrthomsen.github.io/pygrametl/
+
+4.1 done in : bonus answer.sql
+
+5: will use Apache airflow or Glue ETL scheduler, if not available then a Windows scheduled task or Linux cron
+
+6. Test before deploy to scheduling tool
+Yes can setup a docker
+
+## Data Reporting.
+
+1 done as an example: top 5 nation by rev.SQL  
+
+(answer: ('CANADA', 3545033470.4100056), ('EGYPT', 3465584296.767509), ('IRAN', 3376856530.8189025), ('ALGERIA', 3154835599.520595), ('BRAZIL', 3129727100.2945952),
+
+http://chrthomsen.github.io/pygrametl/
 
 ## Caveat
 
