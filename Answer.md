@@ -13,7 +13,9 @@ select_result.py
 Answers:
 
 1. File format is CSV( pipe delimited)
+
 2. See .py files
+
 3  Would use a tool to deal with slow change dimension etc for star schema, may try http://chrthomsen.github.io/pygrametl/
 
 4.1 done in : bonus answer.sql
