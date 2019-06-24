@@ -1,5 +1,7 @@
 import sqlite3
 
+from etl_main import *
+
 output_db="example.db"
 
 def init_conn(db):
@@ -39,6 +41,12 @@ run_script(cursor)
 
 con = sqlite3.connect('example.db')
 cursor = con.cursor()
-cursor.execute("select count(1) from NATION ") #SELECT name FROM sqlite_master WHERE type='table';
+#cursor.execute("select c1.*, case when c1.C_acctbal<lowerQuartile then 'low' when c1.C_acctbal<upperQuartile then 'mid' else 'high' end as bal_group from customer c1 cross join (select min(C_acctbal),max(C_acctbal),((MIN(C_acctbal)+ AVG(C_acctbal)) / 2) AS lowerQuartile,((MAX(C_acctbal)+ AVG(C_acctbal)) / 2) AS upperQuartile from customer ) c2 ") #SELECT name FROM sqlite_master WHERE type='table';
 #select * from nation
-print(cursor.fetchall())
+#print(cursor.fetchall())
+
+with open("top 5 nation by rev.SQL", 'r') as file:
+			script_content = file.read()
+			cursor.execute(script_content)
+			print(cursor.fetchall())
+
