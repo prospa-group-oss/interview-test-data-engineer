@@ -16,7 +16,7 @@ Answers:
 
 2. See .py files
 
-3  Would use a tool to deal with slow change dimension etc for star schema, may try http://chrthomsen.github.io/pygrametl/
+3  Would use a tool to deal with slow change dimension etc for star schema, may try [pygrametl](http://chrthomsen.github.io/pygrametl)
 
 4.1 done in : bonus answer.sql
 
@@ -31,7 +31,6 @@ Yes can setup a docker
 
 (answer: ('CANADA', 3545033470.4100056), ('EGYPT', 3465584296.767509), ('IRAN', 3376856530.8189025), ('ALGERIA', 3154835599.520595), ('BRAZIL', 3129727100.2945952),
 
-http://chrthomsen.github.io/pygrametl/
 
 ## Caveat
 
