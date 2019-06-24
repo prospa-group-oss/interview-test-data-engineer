@@ -3,6 +3,12 @@
 2. Just run etl_main.py to load the file
 3. select_result.py can be used to test records have been written
 
+## file to review for interviewer:
+data_validation.py
+etl_main.py
+select_result.py
+bonus answer.sql
+
 ## Caveat
 
 For all files, there is an extra separator at the end of each line, therefore we had to remove the last column on the fly before write to DB.
@@ -16,6 +22,8 @@ For all files, there is an extra separator at the end of each line, therefore we
 ## pre-requisite: SQLite needs to be installed
 ## Time used:
 35 min on data_validation.py, ~ 100 minutes on ETL_main.py, 30 min to debug
+
+5 min on extra bonus question (divide customer Balance to 3 groups, used 25% 75% quartiles)
 
 
 ## base64 bonus instruction:
