@@ -7,10 +7,11 @@ from data_validation import *
 
 output_db='example.db'
 
-# Dict for Number of fields in each table
+# Dict for Number of fields in each table, field names not actually used
+# Note at the end of each line there is an extra | separator, which should be discarded
 dic = {
 
-        "nation":(4,['N_NATIONKEY','N_NAME','N_REGIONKEY','N_COMMENT'])
+        "NATION":(4,['N_NATIONKEY','N_NAME','N_REGIONKEY','N_COMMENT'])
         ,"region":(3,['R_REGIONKEY','R_NAME','R_COMMENT'])
 
         ,"part":(9,['P_PARTKEY','P_NAME','P_MFGR','P_BRAND','P_TYPE','P_SIZE','P_CONTAINER','P_RETAILPRICE','P_COMMENT'])
@@ -21,12 +22,7 @@ dic = {
         ,"lineitem":(16,['L_ORDERKEY','L_PARTKEY','L_SUPPKEY','L_LINENUMBER','L_QUANTITY','L_EXTENDEDPRICE','L_DISCOUNT','L_TAX','L_RETURNFLAG','L_LINESTATUS','L_SHIPDATE','L_COMMITDATE','L_RECEIPTDATE','L_SHIPINSTRUCT','L_SHIPMODE','L_COMMENT'])
 }
 
-# Because table name is same as file name,
-'''dic_table_file = {
 
-        "NATION":"nation.tbl"
-       
-}'''
 
 
 def init_conn(db):
@@ -61,7 +57,7 @@ def run_script(filename,cursor):
 
 
 	
-def read_files(rootdir,file_extension,delimit_char,broken_list,cursor):
+def read_files(rootdir,file_extension,delimit_char,broken_list,cursor,remove_extra_column=0):
 
 
 
@@ -79,16 +75,24 @@ def read_files(rootdir,file_extension,delimit_char,broken_list,cursor):
 				table_name=filename[:-4]
 				field_count=dic[table_name][0]
 				field_tuple=tuple(dic[table_name][1])
+
 	
 				i = 0
+				messages=[]
 				for row in reader:
 					i+=1
-					messages = [field_tuple for msg in row]
-					print(row)
-					print(messages)
-					result = cursor.executemany('INSERT INTO ' + table_name + ' VALUES ('+ ('?,' * len(dic)).strip(",") + ')',  messages)
-					#print('INSERT INTO ' + table_name + ' VALUES ('+ ('?,' * len(dic)).strip(",") + ')')
-				print(i, "rows from", filename, "uploaded into database")
+					row=row[:-remove_extra_column]
+					messages.append(tuple(row))
+				try:
+					result = cursor.executemany('INSERT INTO ' + table_name + ' VALUES ('+ ('?,' * field_count).strip(",") + ')',  messages)
+					conn.commit()
+					print(i, "rows from", filename, "uploaded into database")
+					print(result)
+				except sqlite3.Error as e:
+					logging.exception("Database error: %s" % e) 
+				except Exception as e:
+					logging.exception("Exception in _query: %s" % e)
+
 	if conn:
 		conn.close()
 
@@ -100,12 +104,9 @@ bad_files=get_files("C:\PersonalProj\interviews\interview-test-data-engineer\dat
 #
 run_script("ddl_if not exists.sql",cursor)
 
-read_files("C:\PersonalProj\interviews\interview-test-data-engineer\data",".tbl","|",bad_files,cursor)
+# remove 1 last column, because it's blank
+read_files("C:\PersonalProj\interviews\interview-test-data-engineer\data",".tbl","|",bad_files,cursor,1)
 
-# bulk insert the messages
-messages = [(msg.id, msg.string) for msg in cat]
-result = cursor.executemany('INSERT INTO ru  VALUES (?, ?)',  messages)
-assert(result.rowcount == len(messages))
-conn.commit()
+
 
 

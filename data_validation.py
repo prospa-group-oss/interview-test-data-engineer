@@ -37,5 +37,11 @@ def get_files(rootdir,file_extension,delimit_char):
 	return result,broken_files
                   
 
-print(get_files("C:\PersonalProj\interviews\interview-test-data-engineer\data",".tbl","|")[0])
+print("file, columns, record_count:")
+for line in get_files("C:\PersonalProj\interviews\interview-test-data-engineer\data",".tbl","|")[0]:
+
+	print(line)
+
+print("bad files with inconsistent column number:")
+
 print(get_files("C:\PersonalProj\interviews\interview-test-data-engineer\data",".tbl","|")[1])
