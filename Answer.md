@@ -10,7 +10,11 @@ etl_main.py
 
 select_result.py
 
-Answers:
+bonus answer.sql
+
+Top 5 nation by rev.SQL 
+
+## Answers:
 
 1 File format is CSV( pipe delimited)
 
@@ -22,7 +26,8 @@ Answers:
 
 5 Will use Apache airflow or Glue ETL scheduler, if not available then a Windows scheduled task or Linux cron
 
-6 Test before deploy to scheduling tool
+6 Test before deploy to scheduling tool.
+
 Yes can setup a docker
 
 ## Data Reporting.
