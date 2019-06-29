@@ -11,7 +11,11 @@ Following is a little treasure and challenge for those keen on joining this amaz
 # How to run
 
 `pip install kedro`
+Then,
+
 `cd prospa`
+Then,
+
 `kedro run`
 
 # The Project
