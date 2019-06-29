@@ -29,24 +29,13 @@ To install them, run:
 kedro install
 ```
 
-## Running Kedro
+## Running Prospa Project
 
 You can run your Kedro project with:
 
 ```
 kedro run
 ```
-
-## Testing Kedro
-
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests with the following command:
-
-```
-kedro test
-```
-
-To configure the coverage threshold, please have a look at the file `.coveragerc`.
-
 
 ### Working with Kedro from notebooks
 
