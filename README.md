@@ -10,10 +10,9 @@ Following is a little treasure and challenge for those keen on joining this amaz
 
 # How to run
 
-`pip install kedro
-cd prospa
-kedro run`
-
+`pip install kedro`
+`cd prospa`
+`kedro run`
 
 # The Project
 Build a small ETL process to digest a few set of files into a data warehouse like project. 
