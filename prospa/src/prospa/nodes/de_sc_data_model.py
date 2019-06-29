@@ -148,8 +148,8 @@ def order_fact(df_orders: SparkDataSet,
               "L_ORDERKEY",
               "R_REGIONKEY"
               ) \
-        .withColumn("Order_Line_Revenue", df_lineitem.L_EXTENDEDPRICE -
-                    df_lineitem.L_DISCOUNT + df_lineitem.L_TAX) \
+        .withColumn("Order_Line_Revenue", df_lineitem.L_EXTENDEDPRICE*(1-df_lineitem.L_DISCOUNT) +
+                    df_lineitem.L_EXTENDEDPRICE * df_lineitem.L_TAX) \
         .toDF(*column_name)
 
     return df_order_fact
