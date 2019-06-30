@@ -60,3 +60,9 @@ The data.zip file were generated with scale factor of 0.01
 Please, encode your file with the instruction you used to generate the data files.
 
 
+## Notes for myself
+My Jupytor notebook best practices:
+1. Keep different notebooks in a classified folder structure, including draft notebooks
+2. Don't write too many small notebooks, also try to include a block in a function
+3. Do imports at the top
+4. (should) use virtualenv
