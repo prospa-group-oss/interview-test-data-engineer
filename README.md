@@ -61,7 +61,7 @@ To get the bonus points, please encoded the file with the instructions were used
 
 Data Reporting
 -------
-One of the most important aspects to build a DWH is to deliver insights to end-users. 
+One of the most important aspects to build a DWH is to deliver insights to end-users. Besides the question bellow, what extra insights you can think of can be generated from this dataset?
 
 Can you using the designed star schema (or if you prefer the raw data), generate SQL statements to answer the following questions:
 
