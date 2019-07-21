@@ -2,7 +2,7 @@
 
 1. Have used Mysql as a database to load the data and create datawareshouse
 
-2. was able to decode the base64 encoded instruction file and generated my own data using scale factor of 0.2
+2. was able to decode the base64 encoded instruction file and generated my own data using scale factor of 0.1
 
 First step is to run TPCH-sqlite with scale factor of 0.1 and place the files in dinesh_solution/landing/ folder
 
