@@ -1,0 +1,6 @@
+ {
+  "tables": [ "region", "nation", "part", "supplier", "partsupp", "customer", "orders", "lineitem"],
+  "database": "retail1",
+  "host":"localhost",
+  "user":"root"
+}
