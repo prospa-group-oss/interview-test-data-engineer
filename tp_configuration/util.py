@@ -20,6 +20,12 @@ def report_config():
         cust_configuration = yaml.load(config_load)
     return cust_configuration
 
+def ddl_config():
+    config_file = os.path.join(config_path, "ddl.yaml")
+    with open(config_file,"r") as config_load :
+        cust_configuration = yaml.load(config_load)
+    return cust_configuration
+
 if __name__ == "__main__":
     print(load_config())
 

@@ -26,11 +26,39 @@ How to do it?
 -----------------------
 Fork this repo, build your ETL process and commit the code with your answers. Open a Pull Request and send us a message highlighting the test is completed.
 
+
 #### Rules
 * it must come with step by step instructions to run the code.
 * please, be mindful that your code might be moved or deleted after we analyse the PR. 
 * use the best practices
 * be able to explain from the ground up the whole process on face to face interview
+
+
+Solution Setup 
+-------------
+
+- Create a virtualenv and activate it
+- run setup.py, it will install all the requirements and create tables in database.
+	> python setup.py install
+	
+- Standalone
+	- Loading files to database.
+		> cd interview-test-data-engineer
+		> python tp_loader.py
+		
+	- Loading tables to dwh.
+		> cd interview-test-data-engineer
+		> python dwh_loader.py
+		
+	- Generating the reports.
+		> cd interview-test-data-engineer
+		> python report_generator.py
+		
+- Pipeline with dependecy
+	> cd interview-test-data-engineer
+	> python -m luigi --module scheduling_luigi reportGeneration --local-scheduler
+
+
 
 The small ETL project
 --------- 
@@ -91,6 +119,8 @@ To get the bonus points, please encoded the file with the instructions were used
 		- In current configuration first two task will run once a day.
 		- We can add luigi script in crontab to run like every hour to generate the reports, only once a day it will load the data in database.
 		![alt text](luigi_depedency.JPG "luigi")
+		
+		> python -m luigi --module scheduling_luigi reportGeneration
  
 **Bonus**: What to do if the data arrives in random order and times via streaming?
 		- Instead of batch we can use opesource stream processing engines to process and transform the streaming data.
