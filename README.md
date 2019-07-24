@@ -90,6 +90,7 @@ To get the bonus points, please encoded the file with the instructions were used
 			- Create report on top of star schema.
 		- In current configuration first two task will run once a day.
 		- We can add luigi script in crontab to run like every hour to generate the reports, only once a day it will load the data in database.
+		![alt text](luigi_depedency.JPG "luigi")
  
 **Bonus**: What to do if the data arrives in random order and times via streaming?
 		- Instead of batch we can use opesource stream processing engines to process and transform the streaming data.
@@ -115,31 +116,31 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 
 1. What are the top 5 nations in terms of revenue?
 
-		query `
+		
 
-    SELECT ps.supp_nation,
-    Round(Sum(l.l_revenue), 4) AS revenue
-    FROM   dwh_lineitem l
-    JOIN dwh_partsupp ps
-    ON l.l_partkey = ps.ps_partkey
-    AND l.l_suppkey = ps.ps_suppkey
-    GROUP  BY ps.supp_nation
-    ORDER  BY revenue DESC
-    LIMIT  5;
+			SELECT ps.supp_nation,
+			Round(Sum(l.l_revenue), 4) AS revenue
+			FROM   dwh_lineitem l
+			JOIN dwh_partsupp ps
+			ON l.l_partkey = ps.ps_partkey
+			AND l.l_suppkey = ps.ps_suppkey
+			GROUP  BY ps.supp_nation
+			ORDER  BY revenue DESC
+			LIMIT  5;
 
-
-	`
-	Nation|Revenue
-	UNITED STATES|164414923.6019
-	CHINA|146615727.9154
-	MOZAMBIQUE|139965572.2776
-	VIETNAM|123401005.7742
-	EGYPT|121943744.3883
+	
+			Nation         | Revenue
+			--- | ---
+			UNITED STATES  | 164414923.6019
+			CHINA          | 146615727.9154 
+			MOZAMBIQUE     | 139965572.2776
+			VIETNAM | 123401005.7742
+			EGYPT | 121943744.3883
 
 
 2. From the top 5 nations, what is the most common shipping mode?
 
-			query `
+			
 			
 			WITH top_rev_nation AS 
 			( 
@@ -165,32 +166,116 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			ORDER BY count_ship DESC limit 5
 			
 			
-			`
+			Shipping Mode | Count of Shipment
+			--- | ---
+				TRUCK | 3000
+				MAIL | 2968
+				REG AIR | 2948
+				AIR | 2922
+				RAIL  | 2903
+			
+			
+			
 
 3. What are the top selling months?
 
-	`
-	SELECT Strftime('%m', l.ord_orderdate) AS month, 
-		   Strftime('%Y', l.ord_orderdate) AS year, 
-		   Count(1)                        AS sell_count 
-	FROM   dwh_lineitem l 
-	GROUP  BY month, 
-			  year 
-	ORDER  BY sell_count DESC 
-	LIMIT  5 
 	
+			SELECT Strftime('%m', l.ord_orderdate) AS month, 
+				   Strftime('%Y', l.ord_orderdate) AS year, 
+				   Count(1)                        AS sell_count 
+			FROM   dwh_lineitem l 
+			GROUP  BY month, 
+					  year 
+			ORDER  BY sell_count DESC 
+			LIMIT  5 
 	
-	`
+			Month | Year | Number of orders
+			--- | --- | ---
+				01 | 1994 | 876
+				12 | 1993 | 872
+				05 | 1994 | 853
+				09 | 1993 | 849
+				12 | 1995 |846
+	
 
 4. Who are the top customer in terms of revenue and/or quantity?
 
+			SELECT c.c_name, 
+				   Round(Sum(l.l_revenue), 4) AS revenue 
+			FROM   dwh_lineitem l 
+				   JOIN dwh_customer c 
+					 ON l.ord_custkey = c.c_custkey 
+			GROUP  BY c.c_name 
+			ORDER  BY revenue DESC 
+			LIMIT  5 
+			
+			Customer Name | Revenue created by customer
+			--- | ---
+			Customer#000001489 | 5203674.0537
+			Customer#000000214 | 4503703.9036
+			Customer#000000073 | 4466381.0513
+			Customer#000001246 | 4465335.6222
+			Customer#000001396 | 4455381.8182
+			
+			
+			
+			SELECT c.c_name, 
+				   Sum(l.l_quantity) AS quantity 
+			FROM   dwh_lineitem l 
+				   JOIN dwh_customer c 
+					 ON l.ord_custkey = c.c_custkey 
+			GROUP  BY c.c_name 
+			ORDER  BY quantity DESC 
+			LIMIT  5 
+
+			
+			Customer Name | Ordered Quantity
+			--- | ---
+			Customer#000001489 | 3868
+			Customer#000001396 | 3408
+			Customer#000000073 | 3384
+			Customer#000000214 | 3369
+			Customer#000000898 | 3309
+
+
 5. Compare the sales revenue of on current period against previous period?
 
-	`
-	
-	
-	
-	`
+
+
+			WITH rev_per_mont AS 
+			( 
+					 SELECT   Strftime('%m',l.ord_orderdate)              AS month, 
+							  Cast(Strftime('%Y',l.ord_orderdate) AS INT) AS year, 
+							  Sum(l.l_revenue)                            AS revenue 
+					 FROM     dwh_lineitem l 
+					 GROUP BY month, 
+							  year ) 
+			SELECT   cur.month, 
+					 cur.year , 
+					 Round(cur.revenue,4 ) , 
+					 Round(pre.revenue,4), 
+					 pre.year, 
+					 Round(cur.revenue-pre.revenue,4) diff_frm_last 
+			FROM     rev_per_mont cur 
+			JOIN     rev_per_mont pre 
+			ON       cur.month = pre.month 
+			AND      cur.year - 1 = pre.year 
+			ORDER BY cur.year limit 10
+			
+			
+			Month | Year | Current period revenue | Previous period revenue | Previous Year | Difference in Revenue
+			--- | --- | --- | --- | --- | ---
+			01 | 1993 | 24753231.5263 | 29253389.6627 | 1992 | -4500158.1364
+			02 | 1993 | 24855018.6369 | 23707595.2813 | 1992 | 1147423.3556
+			03 | 1993 | 23557904.426  | 28292976.7845 | 1992 | -4735072.3585
+			04 | 1993 | 25303870.929  | 26663200.5775 | 1992 | -1359329.6485
+			05 | 1993 | 27447758.9238 | 26430796.3036 | 1992 | 1016962.6202
+			06 | 1993 | 24350293.5602 | 24027814.3652 | 1992 | 322479.195
+			07 | 1993 | 25126613.1494 | 25344993.1775 | 1992 | -218380.0281
+			08 | 1993 | 25702903.18   | 27862035.7818 | 1992 | -2159132.6018
+			09 | 1993 | 28765084.253  | 26375607.9517 | 1992 | 2389476.3013
+			10 | 1993 | 29558233.359  | 25569894.3717 | 1992 | 3988338.9873
+                                        
 
 Data profilling
 ----   
