@@ -113,6 +113,10 @@ Can you using the designed star schema (or if you prefer the raw data), generate
   - Solution
 	- Created module ./report_generator.py to generate the reports and reports can be found under ./report/ directory.
 	- Please find inline query and output against each line item.
+	- Extra insights :
+		- Top Countries with bilateral trade or trade deficit.
+		- Supplier with minimum cost of part.
+		- supplier or part with most returned orders.
 
 1. What are the top 5 nations in terms of revenue?
 
@@ -129,13 +133,13 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			LIMIT  5;
 
 	
-			Nation         | Revenue
-			--- | ---
-			UNITED STATES  | 164414923.6019
-			CHINA          | 146615727.9154 
-			MOZAMBIQUE     | 139965572.2776
-			VIETNAM | 123401005.7742
-			EGYPT | 121943744.3883
+Nation         | Revenue
+--- | ---
+UNITED STATES  | 164414923.6019
+CHINA          | 146615727.9154 
+MOZAMBIQUE     | 139965572.2776
+VIETNAM | 123401005.7742
+EGYPT | 121943744.3883
 
 
 2. From the top 5 nations, what is the most common shipping mode?
@@ -166,13 +170,13 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			ORDER BY count_ship DESC limit 5
 			
 			
-			Shipping Mode | Count of Shipment
-			--- | ---
-				TRUCK | 3000
-				MAIL | 2968
-				REG AIR | 2948
-				AIR | 2922
-				RAIL  | 2903
+Shipping Mode | Count of Shipment
+--- | ---
+	TRUCK | 3000
+	MAIL | 2968
+	REG AIR | 2948
+	AIR | 2922
+	RAIL  | 2903
 			
 			
 			
@@ -189,13 +193,13 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			ORDER  BY sell_count DESC 
 			LIMIT  5 
 	
-			Month | Year | Number of orders
-			--- | --- | ---
-				01 | 1994 | 876
-				12 | 1993 | 872
-				05 | 1994 | 853
-				09 | 1993 | 849
-				12 | 1995 |846
+Month | Year | Number of orders
+--- | --- | ---
+	01 | 1994 | 876
+	12 | 1993 | 872
+	05 | 1994 | 853
+	09 | 1993 | 849
+	12 | 1995 |846
 	
 
 4. Who are the top customer in terms of revenue and/or quantity?
@@ -209,13 +213,13 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			ORDER  BY revenue DESC 
 			LIMIT  5 
 			
-			Customer Name | Revenue created by customer
-			--- | ---
-			Customer#000001489 | 5203674.0537
-			Customer#000000214 | 4503703.9036
-			Customer#000000073 | 4466381.0513
-			Customer#000001246 | 4465335.6222
-			Customer#000001396 | 4455381.8182
+Customer Name | Revenue created by customer
+--- | ---
+Customer#000001489 | 5203674.0537
+Customer#000000214 | 4503703.9036
+Customer#000000073 | 4466381.0513
+Customer#000001246 | 4465335.6222
+Customer#000001396 | 4455381.8182
 			
 			
 			
@@ -229,13 +233,13 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			LIMIT  5 
 
 			
-			Customer Name | Ordered Quantity
-			--- | ---
-			Customer#000001489 | 3868
-			Customer#000001396 | 3408
-			Customer#000000073 | 3384
-			Customer#000000214 | 3369
-			Customer#000000898 | 3309
+Customer Name | Ordered Quantity
+--- | ---
+Customer#000001489 | 3868
+Customer#000001396 | 3408
+Customer#000000073 | 3384
+Customer#000000214 | 3369
+Customer#000000898 | 3309
 
 
 5. Compare the sales revenue of on current period against previous period?
@@ -263,18 +267,18 @@ Can you using the designed star schema (or if you prefer the raw data), generate
 			ORDER BY cur.year limit 10
 			
 			
-			Month | Year | Current period revenue | Previous period revenue | Previous Year | Difference in Revenue
-			--- | --- | --- | --- | --- | ---
-			01 | 1993 | 24753231.5263 | 29253389.6627 | 1992 | -4500158.1364
-			02 | 1993 | 24855018.6369 | 23707595.2813 | 1992 | 1147423.3556
-			03 | 1993 | 23557904.426  | 28292976.7845 | 1992 | -4735072.3585
-			04 | 1993 | 25303870.929  | 26663200.5775 | 1992 | -1359329.6485
-			05 | 1993 | 27447758.9238 | 26430796.3036 | 1992 | 1016962.6202
-			06 | 1993 | 24350293.5602 | 24027814.3652 | 1992 | 322479.195
-			07 | 1993 | 25126613.1494 | 25344993.1775 | 1992 | -218380.0281
-			08 | 1993 | 25702903.18   | 27862035.7818 | 1992 | -2159132.6018
-			09 | 1993 | 28765084.253  | 26375607.9517 | 1992 | 2389476.3013
-			10 | 1993 | 29558233.359  | 25569894.3717 | 1992 | 3988338.9873
+Month | Year | Current period revenue | Previous period revenue | Previous Year | Difference in Revenue
+--- | --- | --- | --- | --- | ---
+01 | 1993 | 24753231.5263 | 29253389.6627 | 1992 | -4500158.1364
+02 | 1993 | 24855018.6369 | 23707595.2813 | 1992 | 1147423.3556
+03 | 1993 | 23557904.426  | 28292976.7845 | 1992 | -4735072.3585
+04 | 1993 | 25303870.929  | 26663200.5775 | 1992 | -1359329.6485
+05 | 1993 | 27447758.9238 | 26430796.3036 | 1992 | 1016962.6202
+06 | 1993 | 24350293.5602 | 24027814.3652 | 1992 | 322479.195
+07 | 1993 | 25126613.1494 | 25344993.1775 | 1992 | -218380.0281
+08 | 1993 | 25702903.18   | 27862035.7818 | 1992 | -2159132.6018
+09 | 1993 | 28765084.253  | 26375607.9517 | 1992 | 2389476.3013
+10 | 1993 | 29558233.359  | 25569894.3717 | 1992 | 3988338.9873
                                         
 
 Data profilling
@@ -282,8 +286,17 @@ Data profilling
 Data profiling are bonus.
 
 What tools or techniques you would use to profile the data?
+
+	- We can use profiling modules in python like panda_profiling.
+	- we can also use pandas with seaborn/matplot lib to explore the data.
  
-What results of the data profiling can impact on your analysis and design?   
+What results of the data profiling can impact on your analysis and design?
+	- Profiling of data can help in indetifing below.
+		- Type of data 
+		- If data is categorical than unique categories.
+		- Missing values in data.
+		- Descriptive statistics like mean, mode, skewness
+		- Relationship between columns (co-relation)
 
 
 
@@ -292,8 +305,27 @@ Architecture
 If this pipeline is to be build for a real live environment.
 What would be your recommendations in terms of tools and process?
 
+	- Load to the database :
+		- We can expose webservies to application managing orders and shipping.
+		- On webservice call we can insert the lineitem and orders table, and update the customer and partsupp table.
+
+	- Load to dataware house :
+		- If select load is not an issue on database, we can create stream on database tables using spark structured streaming.
+			- when the new insert or update will done on database, same will be subscribed to dwh tables.
+			- On top of that using streaming we can generate near-real-time dash board displaying items like number of part sold in last 1 hour, revenue in last 2 hour etc.
+		
+		- If select load is an issue on database, we can have load webservice (mentioned in first point) push the same data to a messsage queue.
+			- Using Spark streaming we can subscribe to the messaging queue to get the input data for dwh.
+			
+	- Reporting : 
+		- Most of the reporting will be done using spark cluster created for streaming for batch processing.
+		- Opeartional critical information can be publish on live dashboard near-real-time using streaming and web sockets.
+		
+		
+
 Would be a problem if the data from the source system is growing at 6.1-12.7% rate a month?
 
+	- 
 
 
 ERD
