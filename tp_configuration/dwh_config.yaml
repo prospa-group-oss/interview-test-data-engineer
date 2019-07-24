@@ -1,0 +1,79 @@
+
+dwh_customer:
+  insert or replace into dwh_customer
+  SELECT c.c_custkey,
+  c.c_name,
+  c.c_address,
+  c.c_nationkey,
+  c.c_phone,
+  c.c_acctbal,
+  c.c_acctbal%3 as c_balgroup,
+  c.c_mktsegment,
+  n.n_name AS c_nation,
+  r.r_name AS c_region,
+  c.c_comment
+  FROM   region r
+  JOIN   nation n
+  JOIN   customer c
+  ON     r.r_regionkey = n.n_regionkey
+  AND    c.c_nationkey = n.n_nationkey;
+
+dwh_partsupp:
+  insert or replace into dwh_partsupp
+  SELECT ps.ps_partkey,
+  ps.ps_suppkey,
+  ps.ps_availqty,
+  ps.ps_supplycost,
+  s.s_name        AS supp_name,
+  s.s_address     AS supp_address,
+  s.s_phone       AS supp_phone,
+  s.s_acctbal     AS supp_acctbal,
+  n.n_name        AS supp_nation,
+  r.r_name        AS supp_region,
+  p.p_name        AS part_name,
+  p.p_mfgr        AS part_mfgr,
+  p.p_brand       AS part_brand,
+  p.p_type        AS part_type,
+  p.p_size        AS part_size,
+  p.p_container   AS part_container,
+  p.p_retailprice AS part_retailprice,
+  ps.ps_comment
+  FROM   supplier s
+  JOIN   partsupp ps
+  JOIN   part p
+  JOIN   region r
+  JOIN   nation n
+  ON     s.s_suppkey = ps.ps_suppkey
+  AND    ps.ps_partkey = p.p_partkey
+  AND    r.r_regionkey = n.n_regionkey
+  AND    s.s_nationkey = n.n_nationkey
+
+dwh_lineitem:
+  insert or replace into dwh_lineitem
+  SELECT l.l_orderkey,
+  l.l_partkey,
+  l.l_suppkey,
+  l.l_linenumber,
+  l.l_quantity,
+  l.l_extendedprice,
+  l.l_discount,
+  l.l_extendedprice*(1-l.l_discount) as l_revenue,
+  l.l_tax,
+  l.l_returnflag,
+  l.l_linestatus,
+  l.l_shipdate,
+  l.l_commitdate,
+  l.l_receiptdate,
+  l.l_shipinstruct,
+  l.l_shipmode,
+  o.o_custkey as ord_custkey,
+  o.o_orderstatus   AS ord_orderstatus,
+  o.o_totalprice    AS ord_totalprice,
+  o.o_orderdate     AS ord_orderdate,
+  o.o_orderpriority AS ord_orderpriority,
+  o.o_clerk         AS ord_clerk,
+  o.o_shippriority  AS ord_shippriority,
+  l.l_comment
+  FROM   lineitem l
+  JOIN orders o
+  ON l.l_orderkey = o.o_orderkey

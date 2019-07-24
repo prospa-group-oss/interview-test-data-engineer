@@ -1,0 +1,6 @@
+Shipping Mode|Count of Shipment
+TRUCK|3000
+MAIL|2968
+REG AIR|2948
+AIR|2922
+RAIL|2903

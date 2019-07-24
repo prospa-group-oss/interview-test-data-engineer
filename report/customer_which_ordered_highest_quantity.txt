@@ -1,0 +1,6 @@
+Customer Name|Ordered Quantity
+Customer#000001489|3868
+Customer#000001396|3408
+Customer#000000073|3384
+Customer#000000214|3369
+Customer#000000898|3309

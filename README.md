@@ -39,6 +39,7 @@ The small ETL project
 
 **Super Bonus**: generate your own data through the instructions on the encoded file `bonus_etl_data_gen.txt`.
 To get the bonus points, please encoded the file with the instructions were used to generate the files.
+* Updated the file with the instructions.
 
 2. Code you scripts to load the data into a database.
 

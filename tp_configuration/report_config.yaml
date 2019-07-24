@@ -1,0 +1,138 @@
+
+top_supp_nation :
+  query :
+    SELECT ps.supp_nation,
+    Round(Sum(l.l_revenue), 4) AS revenue
+    FROM   dwh_lineitem l
+    JOIN dwh_partsupp ps
+    ON l.l_partkey = ps.ps_partkey
+    AND l.l_suppkey = ps.ps_suppkey
+    GROUP  BY ps.supp_nation
+    ORDER  BY revenue DESC
+    LIMIT  5;
+  header:
+    - Nation
+    - Revenue
+  dilimiter:
+    "|"
+
+shipping_mode_for_top_nation:
+  query:
+    WITH top_rev_nation AS
+    (
+    SELECT   ps.supp_nation,
+    Round(Sum(l.l_revenue),4) AS revenue
+    FROM     dwh_lineitem l
+    JOIN     dwh_partsupp ps
+    ON       l.l_partkey = ps.ps_partkey
+    AND      l.l_suppkey = ps.ps_suppkey
+    GROUP BY ps.supp_nation
+    ORDER BY revenue DESC limit 5)
+    SELECT   l.l_shipmode,
+    Count(1) AS count_ship
+    FROM     dwh_partsupp ps
+    JOIN     dwh_lineitem l
+    ON       l.l_partkey = ps.ps_partkey
+    AND      l.l_suppkey = ps.ps_suppkey
+    AND      ps.supp_nation IN
+    (
+    SELECT supp_nation
+    FROM   top_rev_nation)
+    GROUP BY l.l_shipmode
+    ORDER BY count_ship DESC limit 5
+
+  header:
+    - Shipping Mode
+    - Count of Shipment
+  dilimiter:
+    "|"
+
+month_with_highest_order :
+  query:
+    SELECT Strftime('%m', l.ord_orderdate) AS month,
+    Strftime('%Y', l.ord_orderdate) AS year,
+    Count(1)                        AS sell_count
+    FROM   dwh_lineitem l
+    GROUP  BY month,
+    year
+    ORDER  BY sell_count DESC
+    LIMIT  5
+  header:
+    - Month
+    - Year
+    - Number of orders
+  dilimiter:
+    "|"
+  number_of_records:
+    5
+
+
+customer_which_provided_highest_revenue:
+  query:
+    SELECT c.c_name,
+    Round(Sum(l.l_revenue), 4) AS revenue
+    FROM   dwh_lineitem l
+    JOIN dwh_customer c
+    ON l.ord_custkey = c.c_custkey
+    GROUP  BY c.c_name
+    ORDER  BY revenue DESC
+    LIMIT  5
+  header:
+    - Customer Name
+    - Revenue created by customer
+  dilimiter:
+    "|"
+  number_of_records:
+    5
+
+
+customer_which_ordered_highest_quantity:
+  query:
+    SELECT c.c_name,
+    Sum(l.l_quantity) AS quantity
+    FROM   dwh_lineitem l
+    JOIN dwh_customer c
+    ON l.ord_custkey = c.c_custkey
+    GROUP  BY c.c_name
+    ORDER  BY quantity DESC
+    LIMIT  5
+  header:
+    - Customer Name
+    - Ordered Quantity
+  dilimiter:
+    "|"
+  number_of_records:
+    5
+
+revenue_comparision_report:
+  query:
+    WITH rev_per_mont AS
+    (
+    SELECT   Strftime('%m',l.ord_orderdate)              AS month,
+    Cast(Strftime('%Y',l.ord_orderdate) AS INT) AS year,
+    Sum(l.l_revenue)                            AS revenue
+    FROM     dwh_lineitem l
+    GROUP BY month,
+    year )
+    SELECT   cur.month,
+    cur.year ,
+    Round(cur.revenue,4 ) ,
+    Round(pre.revenue,4),
+    pre.year,
+    Round(cur.revenue-pre.revenue,4) diff_frm_last
+    FROM     rev_per_mont cur
+    JOIN     rev_per_mont pre
+    ON       cur.month = pre.month
+    AND      cur.year - 1 = pre.year
+    ORDER BY cur.year limit 10
+  header:
+    - Month
+    - Year
+    - Current period revenue
+    - Previous period revenue
+    - Previous Year
+    - Difference in Revenue
+  dilimiter:
+    "|"
+  number_of_records:
+    10
