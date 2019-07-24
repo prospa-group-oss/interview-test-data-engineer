@@ -60,6 +60,4 @@ class databaseConnection(object):
 if __name__ == "__main__":
     connection = databaseConnection()
 
-    str1 = """VXNlIHRoZSBpbnN0cnVjdGlvbiBvbiBodHRwczovL2dpdGh1Yi5jb20vbG92YXNvYS9UUENILXNxbGl0ZSB0byBnZW5lcmF0ZSB5b3VyIGRhdGEgZmlsZXMuClRoZSBkYXRhLnppcCBmaWxlIHdlcmUgZ2VuZXJhdGVkIHdpdGggc2NhbGUgZmFjdG9yIG9mIDAuMDEKUGxlYXNlLCBlbmNvZGUgeW91ciBmaWxlIHdpdGggdGhlIGluc3RydWN0aW9uIHlvdSB1c2VkIHRvIGdlbmVyYXRlIHRoZSBkYXRhIGZpbGVzLgo="""
-    import base64
-    print(base64.b64decode(str1))
+    
