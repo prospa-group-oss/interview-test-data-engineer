@@ -44,18 +44,22 @@ Solution Setup
 - Standalone
 	- Loading files to database.
 		> cd interview-test-data-engineer
+		
 		> python tp_loader.py
 		
 	- Loading tables to dwh.
 		> cd interview-test-data-engineer
+		
 		> python dwh_loader.py
 		
 	- Generating the reports.
 		> cd interview-test-data-engineer
+		
 		> python report_generator.py
 		
 - Pipeline with dependecy
 	> cd interview-test-data-engineer
+	
 	> python -m luigi --module scheduling_luigi reportGeneration --local-scheduler
 
 
@@ -317,16 +321,16 @@ Data profiling are bonus.
 
 What tools or techniques you would use to profile the data?
 
-	- We can use profiling modules in python like panda_profiling.
-	- we can also use pandas with seaborn/matplot lib to explore the data.
+- We can use profiling modules in python like panda_profiling.
+- we can also use pandas with seaborn/matplot lib to explore the data.
  
 What results of the data profiling can impact on your analysis and design?
-	- Profiling of data can help in indetifing below.
-		- Type of data 
-		- If data is categorical than unique categories.
-		- Missing values in data.
-		- Descriptive statistics like mean, mode, skewness
-		- Relationship between columns (co-relation)
+- Profiling of data can help in indetifing below.
+	- Type of data 
+	- If data is categorical than unique categories.
+	- Missing values in data.
+	- Descriptive statistics like mean, mode, skewness
+	- Relationship between columns (co-relation)
 
 
 
@@ -355,7 +359,7 @@ What would be your recommendations in terms of tools and process?
 
 Would be a problem if the data from the source system is growing at 6.1-12.7% rate a month?
 
-- 
+- Using correct architecture e.g. using microservices or using opensource processing engines, we can scale with growth.
 
 
 ERD
