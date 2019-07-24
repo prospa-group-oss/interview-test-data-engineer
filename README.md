@@ -46,14 +46,21 @@ To get the bonus points, please encoded the file with the instructions were used
 	- Solution 
 		- Created .dlayer.databaseconnection.databaseConnection class to wrap the database interface for all the processes.
 		- In this solution I have used sqllite but databaseConnection class can be changed to support other databases.
-		- With the help of .tp_configuration.util.load_config function, we are below configuration from .tp_configuration.configuration.yaml file.
+		- With the help of .tp_configuration.util.load_config function, we are loading below configuration from .tp_configuration.configuration.yaml file.
 			- file_path : location of the input data files.
 			- file_name	: Name of files/tables in order of insert to the database.
 			- filename_suffix : The suffix for files.
 			- info_threshold : After how many insert a info logging should be created.
 			- insert_query : Insert query for all the tables.
+		- Script ./tp_loader.py is using above configuration to load the data into database.
+				`python tp_loader.py`
 
 3. Design a star schema model which the data should flow.
+
+	- Solution 
+		- Created below schema by denormalizing the original schema.
+			![alt text](star_schema.JPG "star_schema")
+
 
 4. Build your process to load the data into the star schema 
 
