@@ -54,7 +54,7 @@ To get the bonus points, please encoded the file with the instructions were used
 			- insert_query : Insert query for all the tables.
 		- Script ./tp_loader.py is using above configuration to load the data into database. below script can be run to standalone run the loading process.
 		
-				`python tp_loader.py`
+				` python tp_loader.py ` 
 
 3. Design a star schema model which the data should flow.
 
@@ -80,13 +80,26 @@ To get the bonus points, please encoded the file with the instructions were used
 		- The dwh_lineitem table has added column for revenue per line item (dwh_customer.c_balgroup).
 		- Script ./dwh_loader.py is using above configuration to load the data into dwh tables.
 		
-				`python dwh_loader.py`
+				` python dwh_loader.py `
 
 5. How to schedule this process to run multiple times per day?
+	- Solution
+		- Created the luigi schedular tasks to manage the depedency between below three tasks.
+			- Get the input file and load into database
+			- Load the data to star schema.
+			- Create report on top of star schema.
+		- In current configuration first two task will run once a day.
+		- We can add luigi script in crontab to run like every hour to generate the reports, only once a day it will load the data in database.
  
 **Bonus**: What to do if the data arrives in random order and times via streaming?
+		- Instead of batch we can use opesource stream processing engines to process and transform the streaming data.
+		- If the time window for random order and time is large, my suggestion will be to go via batch processing as we will not be able to reach completness for real time aggregation and reporting.
+		
 
 6. How to deploy this code?
+	- Solution
+		- As I mention above the processes can be scheduled using schedulars like luigi or Airflow.
+		- The schedular can be configured to run on containers e.g. for luigi we need to crontab the schedular on dockers.
 
 **Bonus**: Can you make it to run on a container like process (Docker)? 
 
@@ -96,16 +109,88 @@ One of the most important aspects to build a DWH is to deliver insights to end-u
 
 Can you using the designed star schema (or if you prefer the raw data), generate SQL statements to answer the following questions:
 
+  - Solution
+	- Created module ./report_generator.py to generate the reports and reports can be found under ./report/ directory.
+	- Please find inline query and output against each line item.
+
 1. What are the top 5 nations in terms of revenue?
+
+		query `
+
+    SELECT ps.supp_nation,
+    Round(Sum(l.l_revenue), 4) AS revenue
+    FROM   dwh_lineitem l
+    JOIN dwh_partsupp ps
+    ON l.l_partkey = ps.ps_partkey
+    AND l.l_suppkey = ps.ps_suppkey
+    GROUP  BY ps.supp_nation
+    ORDER  BY revenue DESC
+    LIMIT  5;
+
+
+	`
+	Nation|Revenue
+	UNITED STATES|164414923.6019
+	CHINA|146615727.9154
+	MOZAMBIQUE|139965572.2776
+	VIETNAM|123401005.7742
+	EGYPT|121943744.3883
+
 
 2. From the top 5 nations, what is the most common shipping mode?
 
+			query `
+			
+			WITH top_rev_nation AS 
+			( 
+					 SELECT   ps.supp_nation, 
+							  Round(Sum(l.l_revenue),4) AS revenue 
+					 FROM     dwh_lineitem l 
+					 JOIN     dwh_partsupp ps 
+					 ON       l.l_partkey = ps.ps_partkey 
+					 AND      l.l_suppkey = ps.ps_suppkey 
+					 GROUP BY ps.supp_nation 
+					 ORDER BY revenue DESC limit 5) 
+			SELECT   l.l_shipmode, 
+					 Count(1) AS count_ship 
+			FROM     dwh_partsupp ps 
+			JOIN     dwh_lineitem l 
+			ON       l.l_partkey = ps.ps_partkey 
+			AND      l.l_suppkey = ps.ps_suppkey 
+			AND      ps.supp_nation IN 
+					 ( 
+							SELECT supp_nation 
+							FROM   top_rev_nation) 
+			GROUP BY l.l_shipmode 
+			ORDER BY count_ship DESC limit 5
+			
+			
+			`
+
 3. What are the top selling months?
+
+	`
+	SELECT Strftime('%m', l.ord_orderdate) AS month, 
+		   Strftime('%Y', l.ord_orderdate) AS year, 
+		   Count(1)                        AS sell_count 
+	FROM   dwh_lineitem l 
+	GROUP  BY month, 
+			  year 
+	ORDER  BY sell_count DESC 
+	LIMIT  5 
+	
+	
+	`
 
 4. Who are the top customer in terms of revenue and/or quantity?
 
 5. Compare the sales revenue of on current period against previous period?
 
+	`
+	
+	
+	
+	`
 
 Data profilling
 ----   
