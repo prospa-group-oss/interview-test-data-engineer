@@ -52,7 +52,8 @@ To get the bonus points, please encoded the file with the instructions were used
 			- filename_suffix : The suffix for files.
 			- info_threshold : After how many insert a info logging should be created.
 			- insert_query : Insert query for all the tables.
-		- Script ./tp_loader.py is using above configuration to load the data into database.
+		- Script ./tp_loader.py is using above configuration to load the data into database. below script can be run to standalone run the loading process.
+		
 				`python tp_loader.py`
 
 3. Design a star schema model which the data should flow.
@@ -68,6 +69,18 @@ To get the bonus points, please encoded the file with the instructions were used
 - add a fields to classify the customer account balance in 3 groups 
 - add revenue per line item 
 - convert the dates to be distributed over the last 2 years
+
+	- Solution
+		- Using .dlayer.databaseconnection.databaseConnection class process is connecting to sqllite database.
+		- With the help of .tp_configuration.util.load_config function, we are loading below configuration from .tp_configuration/dwh_config.yaml file.
+			- dwh_customer : Query to insert the records in dwh_customer table. Query is joining region, nation, customer tables to get the data.
+			- dwh_partsupp : Query to insert the records in dwh_partsupp table. Query is joining region, nation, part, partsupp and supplier table.
+			- dwh_lineitem : Query to insert the records in dwh_lineitem table. Query is joining lineitem and orders table.
+		- The dwh_customer table has added column for 3 groups for account balance (dwh_customer.c_balgroup).
+		- The dwh_lineitem table has added column for revenue per line item (dwh_customer.c_balgroup).
+		- Script ./dwh_loader.py is using above configuration to load the data into dwh tables.
+		
+				`python dwh_loader.py`
 
 5. How to schedule this process to run multiple times per day?
  
