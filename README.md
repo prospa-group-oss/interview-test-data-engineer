@@ -36,12 +36,22 @@ The small ETL project
 --------- 
 
 1. The data for this exercise can be found on the `data.zip` file. Can you describe the file format?
-
+  - It is pipe separated table export.
 **Super Bonus**: generate your own data through the instructions on the encoded file `bonus_etl_data_gen.txt`.
 To get the bonus points, please encoded the file with the instructions were used to generate the files.
-* Updated the file with the instructions.
+  - Updated the file with the instructions.
 
 2. Code you scripts to load the data into a database.
+
+	- Solution 
+		- Created .dlayer.databaseconnection.databaseConnection class to wrap the database interface for all the processes.
+		- In this solution I have used sqllite but databaseConnection class can be changed to support other databases.
+		- With the help of .tp_configuration.util.load_config function, we are below configuration from .tp_configuration.configuration.yaml file.
+			- file_path : location of the input data files.
+			- file_name	: Name of files/tables in order of insert to the database.
+			- filename_suffix : The suffix for files.
+			- info_threshold : After how many insert a info logging should be created.
+			- insert_query : Insert query for all the tables.
 
 3. Design a star schema model which the data should flow.
 
