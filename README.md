@@ -172,11 +172,11 @@ EGYPT | 121943744.3883
 			
 Shipping Mode | Count of Shipment
 --- | ---
-	TRUCK | 3000
-	MAIL | 2968
-	REG AIR | 2948
-	AIR | 2922
-	RAIL  | 2903
+TRUCK | 3000
+MAIL | 2968
+REG AIR | 2948
+AIR | 2922
+RAIL  | 2903
 			
 			
 			
@@ -195,12 +195,12 @@ Shipping Mode | Count of Shipment
 	
 Month | Year | Number of orders
 --- | --- | ---
-	01 | 1994 | 876
-	12 | 1993 | 872
-	05 | 1994 | 853
-	09 | 1993 | 849
-	12 | 1995 |846
-	
+01 | 1994 | 876
+12 | 1993 | 872
+05 | 1994 | 853
+09 | 1993 | 849
+12 | 1995 |846
+
 
 4. Who are the top customer in terms of revenue and/or quantity?
 
@@ -305,27 +305,27 @@ Architecture
 If this pipeline is to be build for a real live environment.
 What would be your recommendations in terms of tools and process?
 
-	- Load to the database :
-		- We can expose webservies to application managing orders and shipping.
-		- On webservice call we can insert the lineitem and orders table, and update the customer and partsupp table.
+- Load to the database :
+	- We can expose webservies to application managing orders and shipping.
+	- On webservice call we can insert the lineitem and orders table, and update the customer and partsupp table.
 
-	- Load to dataware house :
-		- If select load is not an issue on database, we can create stream on database tables using spark structured streaming.
-			- when the new insert or update will done on database, same will be subscribed to dwh tables.
-			- On top of that using streaming we can generate near-real-time dash board displaying items like number of part sold in last 1 hour, revenue in last 2 hour etc.
+- Load to dataware house :
+	- If select load is not an issue on database, we can create stream on database tables using spark structured streaming.
+		- when the new insert or update will done on database, same will be subscribed to dwh tables.
+		- On top of that using streaming we can generate near-real-time dash board displaying items like number of part sold in last 1 hour, revenue in last 2 hour etc.
+	
+	- If select load is an issue on database, we can have load webservice (mentioned in first point) push the same data to a messsage queue.
+		- Using Spark streaming we can subscribe to the messaging queue to get the input data for dwh.
 		
-		- If select load is an issue on database, we can have load webservice (mentioned in first point) push the same data to a messsage queue.
-			- Using Spark streaming we can subscribe to the messaging queue to get the input data for dwh.
-			
-	- Reporting : 
-		- Most of the reporting will be done using spark cluster created for streaming for batch processing.
-		- Opeartional critical information can be publish on live dashboard near-real-time using streaming and web sockets.
+- Reporting : 
+	- Most of the reporting will be done using spark cluster created for streaming for batch processing.
+	- Opeartional critical information can be publish on live dashboard near-real-time using streaming and web sockets.
 		
 		
 
 Would be a problem if the data from the source system is growing at 6.1-12.7% rate a month?
 
-	- 
+- 
 
 
 ERD
