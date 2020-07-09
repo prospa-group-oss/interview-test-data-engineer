@@ -2,101 +2,74 @@
 
 Prospa is looking for a high quality data engineer which can deliver comprehensive solutions for our continuity and business growth. 
 
-The Analytics team drives the data culture at Prospa, we want to change how we produce data from large batches to micro batching, from daily to near real-time/streaming processing, from tabular reports to insightful dashboards.    
+The Data Engineering team drives the data culture at Prospa. We are migrating from large batches to micro batching, from daily to near real-time/streaming processing, from tabular reports to insightful dashboards.
 
-You can be part of an amazing team which deals with data all the time using different process, tools and technologies.
+You can be part of an amazing team which solves business problems with data via different processes, tools and technologies.
 
-Following is a little treasure and challenge for those keen on joining this amazing company and team.
+The following is a small ETL project as a technical challenge for those keen on join us.
 
 # The Project
-Build a small ETL process to digest a few set of files into a data warehouse like project. 
+Build a simple ETL process to digest the provided set of files into a star schema. 
 
-We are expecting an end-to-end ETL solution to deliver a simple star schema which an end user can easily slice and dice the data through a report or using basic ad-hoc query.
+The end result should enable users to easily slice and dice the data through a report, or using basic ad-hoc queries.
 
 ### Tools and Technologies
-We are a Python and SQL workshop, we would like to see this project using just those tools.  
+We would like you to use Python and SQL, as these are our everyday tools.  
 
-However, we are open to other tools and technologies if we are able to easily replicate on our side. 
+However, we are open to other open-sourced tools and technologies, if we are able to easily replicate on our side. 
 
-For the database, use a simple and light optimizer for your database, choose the one which can run a browser, but don't be limited to it. 
-
-Please, avoid licensed products, we may not be able to proceed with this restriction on our own, if this is the case you may need to book a meeting to bring your tool and demo to us. 
-
-How to do it?
+What we need from you?
 -----------------------
-Fork this repo, build your ETL process and commit the code with your answers. Open a Pull Request and send us a message highlighting the test is completed.
+Clone this repo, build your ETL process and commit the code with your answers. 
 
-#### Rules
-* it must come with step by step instructions to run the code.
-* please, be mindful that your code might be moved or deleted after we analyse the PR. 
-* use the best practices
-* be able to explain from the ground up the whole process on face to face interview
+Open a Pull Request and in the description state "I have completed the test."
 
-The small ETL project
+#### Expectations
+* Include a step-by-step instruction to run your code.
+* We may move or delete your code after we have analysed the PR. 
+* Use best practices.
+* You are expected to be able to explain this whole process in a face-to-face interview.
+* Allow for 4-6 hours for this test.
+
+Instructions
 --------- 
+Data Engineering
+1. The data for this exercise can be found in the `data.zip` file. Please describe the file format.
 
-1. The data for this exercise can be found on the `data.zip` file. Can you describe the file format?
+**Bonus** point (hard): generate your own data as per instructions in the encoded file `bonus_etl_data_gen.txt`.
+To get the bonus point, please include an encoded file of the generated data set.
 
-**Super Bonus**: generate your own data through the instructions on the encoded file `bonus_etl_data_gen.txt`.
-To get the bonus points, please encoded the file with the instructions were used to generate the files.
-
-2. Code you scripts to load the data into a database.
-
-3. Design a star schema model which the data should flow.
-
-4. Build your process to load the data into the star schema 
+2. Design a star schema model, and write the load scripts to populate the schema. Provide the loads scripts, alongside an ERD (hand-drawn is ok). 
 
 **Bonus** point: 
-- add a fields to classify the customer account balance in 3 groups 
-- add revenue per line item 
-- convert the dates to be distributed over the last 2 years
+- define a classification for breaking the customer account balances into 3 logical groups
+- add a field for this new classification
+- add revenue per line item
 
-5. How to schedule this process to run multiple times per day?
+3. Describe how you can schedule this process to run multiple times per day.
  
-**Bonus**: What to do if the data arrives in random order and times via streaming?
+**Bonus** point: 
+- What would you do to cater for data arriving in random order?
+- What about if the data comes from a stream, and arrives at random times?
 
-6. How to deploy this code?
+4. Describe how you would deploy your code to production, and allow for future maitenance.
 
-**Bonus**: Can you make it to run on a container like process (Docker)? 
+**Bonus** point: What changes would you need to make to run this code in a containerized environment (e.g. Docker)? 
 
-Data Reporting
--------
-One of the most important aspects to build a DWH is to deliver insights to end-users. Besides the question bellow, what extra insights you can think of can be generated from this dataset?
+5. One of the most important aspects of a DWH is to deliver insights to end-users. Can you use the designed star schema (or, if you prefer the raw data), write SQL statements to answer the following questions:
 
-Can you using the designed star schema (or if you prefer the raw data), generate SQL statements to answer the following questions:
+  a. What are the top 5 nations in terms of revenue?
 
-1. What are the top 5 nations in terms of revenue?
+  b. From the top 5 nations, what is the most common shipping mode?
 
-2. From the top 5 nations, what is the most common shipping mode?
+  c. What are the top 3 selling months?
 
-3. What are the top selling months?
+  d. Who are the top customer(s) in terms of either revenue or quantity?
 
-4. Who are the top customer in terms of revenue and/or quantity?
+  e. Compare the sales revenue on a financial year-to-year (01 July to 30 June) basis.
 
-5. Compare the sales revenue of on current period against previous period?
-
-
-Data profilling
-----   
-Data profiling are bonus.
-
-What tools or techniques you would use to profile the data?
- 
-What results of the data profiling can impact on your analysis and design?   
-
-
-
-Architecture
------
-If this pipeline is to be build for a real live environment.
-What would be your recommendations in terms of tools and process?
-
-Would be a problem if the data from the source system is growing at 6.1-12.7% rate a month?
-
-
+  f. What other insights can be generated from this dataset?
 
 ERD
 --
 ![alt text](erd.png "ERD")
-
-Author: adilsonmendonca
