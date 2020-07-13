@@ -33,7 +33,7 @@ Open a Pull Request and in the description state "I have completed the test."
 
 Instructions
 --------- 
-Data Engineering
+
 1. The data for this exercise can be found in the `data.zip` file. Please describe the file format.
 
 **Bonus** point (hard): generate your own data as per instructions in the encoded file `bonus_etl_data_gen.txt`.
@@ -58,17 +58,17 @@ To get the bonus point, please include an encoded file of the generated data set
 
 5. One of the most important aspects of a DWH is to deliver insights to end-users. Can you use the designed star schema (or, if you prefer the raw data), write SQL statements to answer the following questions:
 
-  a. What are the top 5 nations in terms of revenue?
+   a. What are the top 5 nations in terms of revenue?
+ 
+   b. From the top 5 nations, what is the most common shipping mode?
 
-  b. From the top 5 nations, what is the most common shipping mode?
+   c. What are the top 3 selling months?
 
-  c. What are the top 3 selling months?
+   d. Who are the top customer(s) in terms of either revenue or quantity?
 
-  d. Who are the top customer(s) in terms of either revenue or quantity?
+   e. Compare the sales revenue on a financial year-to-year (01 July to 30 June) basis.
 
-  e. Compare the sales revenue on a financial year-to-year (01 July to 30 June) basis.
-
-  f. What other insights can be generated from this dataset?
+   f. What other insights can be generated from this dataset?
 
 ERD
 --
